@@ -1,0 +1,18 @@
+<section>
+    <div class="col-3 m-5 " [formGroup]=form>
+        <h4>Board size:</h4>
+        <select class="form-select" aria-label="Default select example" formControlName="Size">
+            <option *ngFor="let size of sizes; let i = index;" [ngValue]="i">{{size}}
+            </option>
+        </select>
+        <h4 class="mt-4">Difficult:</h4>
+        <select class="form-select" aria-label="Default select example" formControlName="Difficult">
+            <option *ngFor="let difficult of difficults" [ngValue]="difficult.minesPercent">{{difficult.name}}
+            </option>
+        </select>
+        <div class="d-grid gap-2 mt-4">
+            <button class="btn btn-success" type="button"
+                    (click)="start()">Start!</button>
+        </div>
+    </div>
+</section>

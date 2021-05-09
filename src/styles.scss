@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+    background-image: url('./assets/img/ms.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
