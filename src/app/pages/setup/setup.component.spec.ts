@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { SetupComponent } from './setup.component';
 
@@ -8,7 +11,11 @@ describe('SetupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SetupComponent ]
+      declarations: [ SetupComponent ],
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   });
