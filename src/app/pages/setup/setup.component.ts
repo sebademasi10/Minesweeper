@@ -38,13 +38,13 @@ export class SetupComponent {
       })
   }
 
-  calculateNumberOfTiles(amount: number): number {
+  calculateBaseNumberOfTiles(amount: number): number {
     return (amount + 1) * 9
   }
 
   
   start() {
-    let numberOfTiles = this.calculateNumberOfTiles(this.form.value.Size);
+    let numberOfTiles = this.calculateBaseNumberOfTiles(this.form.value.Size);
     let minesPercent = this.form.value.Difficult;
     this.gameService.setUpGame(numberOfTiles, minesPercent)
 

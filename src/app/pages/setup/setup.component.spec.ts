@@ -28,4 +28,12 @@ describe('SetupComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
+  it('Should calculate the base number of tiles', () => {
+    let index = 0;
+    let baseNumberOfTiles = component.calculateBaseNumberOfTiles(index);
+
+    expect(baseNumberOfTiles).toBe(9);
+  })
 });

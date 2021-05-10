@@ -61,7 +61,7 @@
         <p>Would you play again?</p>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="reload(d)">Yes</button>
-        <button type="button" class="btn btn-outline-dark" (click)="goSetup(d)">Change settings</button>
+        <button type="button" class="btn btn-outline-dark" (click)="initializeBoard();d()">Yes</button>
+        <button type="button" class="btn btn-outline-dark" (click)="router.navigate(['/setup']); d()">Change settings</button>
     </div>
 </ng-template>

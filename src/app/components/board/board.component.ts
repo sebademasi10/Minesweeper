@@ -41,7 +41,7 @@ export class BoardComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private router: Router
+    public router: Router
     ) { 
   }
 
@@ -65,32 +65,35 @@ export class BoardComponent implements OnInit {
     this.remainingMines = this.numberOfMines;
   }
 
-  goSetup(onFinish: () => void) {
-    this.router.navigate(['/setup']);
-    onFinish()
-  }
 
-  private getRandomInt(min: number, max: number) {
+  getRandomInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-  reload(onFinish: () => void) {
-    this.initializeBoard();
-    onFinish();
+
+  putMines() {
+
+    let minesLocation = this.getMinesLocation(this.numberOfMines, this.baseNumberOfTiles);
+    
+    
+    for (const cell of minesLocation) {
+      this.cells[cell[0]][cell[1]].hasMine = true; 
+    }
+
+
   }
 
-  private putMines() {
-
+  getMinesLocation(numberOfMines: number, baseNumberOfTiles: number): number [][] {
     let minesLocation: number [][] = [];
 
     let locationMap: ILocationMap = {
     }
     
 
-    for (let index = 0; index < this.numberOfMines; index++) {
+    for (let index = 0; index < numberOfMines; index++) {
 
-      let rowIndex = this.getRandomInt(0,this.baseNumberOfTiles - 1);
-      let colIndex = this.getRandomInt(0,this.baseNumberOfTiles - 1);
+      let rowIndex = this.getRandomInt(0,baseNumberOfTiles - 1);
+      let colIndex = this.getRandomInt(0,baseNumberOfTiles - 1);
 
       let hashedLocation = `${rowIndex}-${colIndex}`
 
@@ -106,10 +109,7 @@ export class BoardComponent implements OnInit {
       minesLocation.push([rowIndex,colIndex]);
     }
 
-    for (const cell of minesLocation) {
-      this.cells[cell[0]][cell[1]].hasMine = true; 
-    }
-
+    return minesLocation;
   }
 
   

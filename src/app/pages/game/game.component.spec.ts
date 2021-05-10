@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { BoardComponent } from 'src/app/components/board/board.component';
 
 import { GameComponent } from './game.component';
@@ -12,7 +13,8 @@ describe('GameComponent', () => {
       declarations: [ 
         GameComponent,
         BoardComponent
-       ]
+       ],
+       imports: [RouterTestingModule]
     })
     .compileComponents();
   });
