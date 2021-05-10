@@ -1,15 +1,23 @@
 table,
-    td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-    td {
-      width:32px;
-      height:32px;
-      background-color: gray;
-      
-    }
+td {
+  border: 1px solid black;
+  // border-collapse: collapse;
+}
+td {
+  width: 32px;
+  height: 32px;
+  background-color: gray;
+  &:hover {
+   box-shadow:         inset 0 0 4px #000000;
+  }
+}
 
 div {
-    text-align: center;
+  text-align: center;
+}
+
+.table-container {
+  border:10px outset green;
+  margin: 10px;
+  padding: 10px;
 }

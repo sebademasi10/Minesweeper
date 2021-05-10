@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/scss/bootstrap';
+
 section {
     display: flex;
     justify-content: center;
@@ -9,4 +11,10 @@ body {
     background-image: url('./assets/img/ms.png');
     background-repeat: no-repeat;
     background-size: cover;
+    min-height: 100vh;
+    backdrop-filter: blur(8px) grayscale(50%) brightness(110%);
+}
+
+.btn-purple {
+    background-color:#980aab ;
 }

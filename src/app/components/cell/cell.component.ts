@@ -22,4 +22,8 @@ export class CellComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getClasses(value: number) {
+    return `opened cell cell-${value}`
+  }
+
 }

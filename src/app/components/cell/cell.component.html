@@ -1,1 +1,2 @@
-<button type="button" class="cell active" [disabled]="pressed"  (click)="pressed=true">{{content == -1? '': content}}</button>
+<button type="button" class="cell" [ngClass]="getClasses(content)" [disabled]="pressed"
+    (click)="pressed=true">{{content == -1 || content == 0 ? ' ': content}}</button>

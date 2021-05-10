@@ -1,4 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ILocationMap } from 'src/app/interfaces/location-map';
 import { CellComponent } from '../cell/cell.component';
 
 @Component({
@@ -11,8 +14,14 @@ export class BoardComponent implements OnInit {
   @Input() baseNumberOfTiles = 9;
   @Input() numberOfMines = 10;
 
+  remainingMines: number = 0;
+
+  @ViewChild('loseModal') loseModal: ElementRef;
+
   pressed: boolean = false;
   gameStatus: string = 'playing';
+
+  closeResult: string = '';
 
   adjacentCells: number[][] = [
     [-1, -1], 
@@ -30,9 +39,17 @@ export class BoardComponent implements OnInit {
 
   cells: CellComponent [][] = [];
 
-  constructor() { }
+  constructor(
+    private modalService: NgbModal,
+    private router: Router
+    ) { 
+  }
 
   ngOnInit(): void {
+    this.initializeBoard();
+  }
+  
+  initializeBoard() {
     for (let y = 0; y < this.baseNumberOfTiles; y++) {
       this.cells[y] = [];
       for (let x = 0; x < this.baseNumberOfTiles; x++) {
@@ -43,30 +60,51 @@ export class BoardComponent implements OnInit {
     }
     this.putMines();
     this.setNumberOfAdjacentMines();
-    
+    this.gameStatus = 'playing';
+    this.remainingCells = Math.pow(this.baseNumberOfTiles, 2) - this.numberOfMines;
+    this.remainingMines = this.numberOfMines;
+  }
+
+  goSetup(onFinish: () => void) {
+    this.router.navigate(['/setup']);
+    onFinish()
   }
 
   private getRandomInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
+  reload(onFinish: () => void) {
+    this.initializeBoard();
+    onFinish();
+  }
+
   private putMines() {
 
     let minesLocation: number [][] = [];
 
+    let locationMap: ILocationMap = {
+    }
+    
+
     for (let index = 0; index < this.numberOfMines; index++) {
+
       let rowIndex = this.getRandomInt(0,this.baseNumberOfTiles - 1);
       let colIndex = this.getRandomInt(0,this.baseNumberOfTiles - 1);
 
-      while (minesLocation.some( cell => cell.includes(rowIndex,colIndex))) {
+      let hashedLocation = `${rowIndex}-${colIndex}`
+
+      while (locationMap[hashedLocation]) {
         rowIndex = this.getRandomInt(0,this.baseNumberOfTiles - 1);
         colIndex = this.getRandomInt(0,this.baseNumberOfTiles - 1);
+        hashedLocation = `${rowIndex}-${colIndex}`
+
       }
+
+      locationMap[hashedLocation] = true;
       
       minesLocation.push([rowIndex,colIndex]);
     }
-    console.log(minesLocation.length);
-    console.log(minesLocation);
 
     for (const cell of minesLocation) {
       this.cells[cell[0]][cell[1]].hasMine = true; 
@@ -74,17 +112,19 @@ export class BoardComponent implements OnInit {
 
   }
 
+  
+
+  openModal() {
+    this.modalService.open(this.loseModal);
+  }
+
   flag(x: number, y:number) {
     if (this.cells[x][y].status === 'flag') {
       this.cells[x][y].status = 'open';
-      if (this.cells[x][y].hasMine) {
-        this.numberOfMines += 1
-      }
+        this.remainingMines += 1
     } else {
       this.cells[x][y].status = 'flag';
-      if (this.cells[x][y].hasMine) {
-        this.numberOfMines -= 1
-      }
+        this.remainingMines -= 1
     }
   }
 
@@ -115,11 +155,16 @@ export class BoardComponent implements OnInit {
       return;
     } else if (this.cells[x][y].hasMine) {
       this.revealAll();
-      this.gameStatus = 'gameover';
-      return 'gameover';
+      this.gameStatus = 'lose';
+      this.openModal();
+      return 'lose';
     } else {
       this.cells[x][y].status = 'clear';
-
+      if (this.remainingCells-- <= 1) {
+        this.gameStatus = 'win';
+        this.revealAll();
+        this.openModal();
+      }
       if(this.cells[x][y].minesAround === 0) {
         for(const peer of this.adjacentCells) {
           if (
@@ -131,6 +176,7 @@ export class BoardComponent implements OnInit {
         }
       }
     }
+
   }
 
   revealAll() {
