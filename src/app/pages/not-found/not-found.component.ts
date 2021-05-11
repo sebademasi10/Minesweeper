@@ -12,8 +12,8 @@ export class NotFoundComponent {
 
   }
 
-  goHome() {
-    this.router.navigate(['setup'])
+  goHome(): void {
+    this.router.navigate(['setup']);
   }
 
 }

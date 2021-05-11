@@ -15,12 +15,12 @@ describe('GameService', () => {
   });
 
   it('Should set baseNumberOfTiles and numberOfMines of gamesetup interface', () => {
-    let baseNumberOfTiles = 9;
-    let minesPercent = 12.35;
+    const baseNumberOfTiles = 9;
+    const minesPercent = 12.35;
 
     service.setUpGame(baseNumberOfTiles, minesPercent);
 
     expect(service.gameSetup.baseNumberOfTiles).toBe(baseNumberOfTiles);
     expect(service.gameSetup.numberOfMines).toBe(10);
-  })
+  });
 });

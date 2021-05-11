@@ -8,7 +8,7 @@ td {
   height: 32px;
   background-color: gray;
   &:hover {
-   box-shadow:         inset 0 0 4px #000000;
+    box-shadow: inset 0 0 4px #000000;
   }
 }
 
@@ -17,7 +17,7 @@ div {
 }
 
 .table-container {
-  border:10px outset green;
+  border: 10px outset green;
   margin: 10px;
   padding: 10px;
 }

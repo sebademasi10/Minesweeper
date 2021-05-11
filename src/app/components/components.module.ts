@@ -8,7 +8,7 @@ import { CellComponent } from './cell/cell.component';
 
 @NgModule({
   declarations: [
-    BoardComponent, 
+    BoardComponent,
     CellComponent,
   ],
   imports: [

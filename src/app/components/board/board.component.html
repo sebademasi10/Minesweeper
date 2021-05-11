@@ -16,19 +16,8 @@
             <tr *ngFor="let row of cells; index as y">
                 <td *ngFor="let cell of cells; index as x" (click)="open(x, y); pressed = true"
                     (contextmenu)="$event.preventDefault(); flag(x,y)">
-                    <!-- <div>Status: {{ cell.status }}</div> -->
                     <div *ngIf="cells[x][y].status === 'clear' && !cells[x][y].hasMine">
                         <app-cell [content]="cells[x][y].minesAround"></app-cell>
-
-                        <!-- {'blue': cells[x][y].minesAround == 1,
-                                              'blue': cells[x][y].minesAround == 1, 
-                                              'blue': cells[x][y].minesAround == 1,
-                                              'blue': cells[x][y].minesAround == 1,
-                                              'blue': cells[x][y].minesAround == 1,
-                                              'blue': cells[x][y].minesAround == 1,
-                                              'blue': cells[x][y].minesAround == 1,
-                                              'blue': cells[x][y].minesAround == 1
-                                            } -->
                     </div>
                     <div *ngIf="cells[x][y].status === 'flag'">
                         <i class="fa fa-flag " aria-hidden="true"></i>
@@ -45,7 +34,6 @@
         <button class="btn btn-purple btn-block mt-2" (click)="initializeBoard()">Restart</button>
     </div>
 </section>
-
 
 <ng-template #loseModal let-c="close" let-d="dismiss">
     <div class="modal-header">

@@ -1,4 +1,4 @@
 export interface IDifficult {
     name: string;
-    minesPercent:  number;
+    minesPercent: number;
 }

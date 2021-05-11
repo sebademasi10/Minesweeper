@@ -31,9 +31,9 @@ describe('SetupComponent', () => {
 
 
   it('Should calculate the base number of tiles', () => {
-    let index = 0;
-    let baseNumberOfTiles = component.calculateBaseNumberOfTiles(index);
+    const index = 0;
+    const baseNumberOfTiles = component.calculateBaseNumberOfTiles(index);
 
     expect(baseNumberOfTiles).toBe(9);
-  })
+  });
 });

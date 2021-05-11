@@ -12,6 +12,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 100vh;
+    min-width: 100vw;
     backdrop-filter: blur(8px) grayscale(50%) brightness(110%);
 }
 

@@ -14,37 +14,36 @@ export class BoardComponent implements OnInit {
   @Input() baseNumberOfTiles = 9;
   @Input() numberOfMines = 10;
 
-  remainingMines: number = 0;
-  loaded: boolean = false;
+  remainingMines = 0;
+  loaded = false;
 
   @ViewChild('loseModal') loseModal: ElementRef;
 
-  pressed: boolean = false;
-  gameStatus: string = 'playing';
+  pressed = false;
+  gameStatus = 'playing';
 
-  closeResult: string = '';
+  closeResult = '';
 
   adjacentCells: number[][] = [
-    [-1, -1], 
-    [-1, 0], 
-    [-1, 1], 
-    [0, -1], 
-    [0, 1], 
-    [1, -1], 
-    [1, 0], 
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 1],
+    [1, -1],
+    [1, 0],
     [1, 1]
-  ]; 
-  
-  remainingCells: number = 0;
-  minesCount: number = 0;
+  ];
 
-  cells: CellComponent [][] = [];
+  remainingCells = 0;
+  minesCount = 0;
+
+  cells: CellComponent[][] = [];
 
   constructor(
     private modalService: NgbModal,
     public router: Router
-    ) { 
-  }
+  ) { }
 
   ngOnInit(): void {
     this.initializeBoard();
@@ -52,8 +51,8 @@ export class BoardComponent implements OnInit {
       this.loaded = true;
     }, 1000);
   }
-  
-  initializeBoard() {
+
+  initializeBoard(): void {
     for (let y = 0; y < this.baseNumberOfTiles; y++) {
       this.cells[y] = [];
       for (let x = 0; x < this.baseNumberOfTiles; x++) {
@@ -70,69 +69,69 @@ export class BoardComponent implements OnInit {
   }
 
 
-  getRandomInt(min: number, max: number) {
+  getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
 
-  putMines() {
+  putMines(): void {
 
-    let minesLocation = this.getMinesLocation(this.numberOfMines, this.baseNumberOfTiles);
-    
-    
+    const minesLocation = this.getMinesLocation(this.numberOfMines, this.baseNumberOfTiles);
+
+
     for (const cell of minesLocation) {
-      this.cells[cell[0]][cell[1]].hasMine = true; 
+      this.cells[cell[0]][cell[1]].hasMine = true;
     }
 
 
   }
 
-  getMinesLocation(numberOfMines: number, baseNumberOfTiles: number): number [][] {
-    let minesLocation: number [][] = [];
+  getMinesLocation(numberOfMines: number, baseNumberOfTiles: number): number[][] {
+    const minesLocation: number[][] = [];
 
-    let locationMap: ILocationMap = {
-    }
-    
+    const locationMap: ILocationMap = {
+    };
+
 
     for (let index = 0; index < numberOfMines; index++) {
 
-      let rowIndex = this.getRandomInt(0,baseNumberOfTiles - 1);
-      let colIndex = this.getRandomInt(0,baseNumberOfTiles - 1);
+      let rowIndex = this.getRandomInt(0, baseNumberOfTiles - 1);
+      let colIndex = this.getRandomInt(0, baseNumberOfTiles - 1);
 
-      let hashedLocation = `${rowIndex}-${colIndex}`
+      let hashedLocation = `${rowIndex}-${colIndex}`;
 
       while (locationMap[hashedLocation]) {
-        rowIndex = this.getRandomInt(0,this.baseNumberOfTiles - 1);
-        colIndex = this.getRandomInt(0,this.baseNumberOfTiles - 1);
-        hashedLocation = `${rowIndex}-${colIndex}`
+        rowIndex = this.getRandomInt(0, this.baseNumberOfTiles - 1);
+        colIndex = this.getRandomInt(0, this.baseNumberOfTiles - 1);
+        hashedLocation = `${rowIndex}-${colIndex}`;
 
       }
 
       locationMap[hashedLocation] = true;
-      
-      minesLocation.push([rowIndex,colIndex]);
+
+      minesLocation.push([rowIndex, colIndex]);
     }
 
     return minesLocation;
   }
 
-  
 
-  openModal() {
+
+  openModal(): void {
     this.modalService.open(this.loseModal);
   }
 
-  flag(x: number, y:number) {
+  flag(x: number, y: number): void {
     if (this.cells[x][y].status === 'flag') {
       this.cells[x][y].status = 'open';
-        this.remainingMines += 1
+      this.remainingMines += 1;
     } else {
       this.cells[x][y].status = 'flag';
-        this.remainingMines -= 1
+      this.remainingMines -= 1;
     }
   }
 
-  setNumberOfAdjacentMines() {
+  setNumberOfAdjacentMines(): void {
     for (let y = 0; y < this.baseNumberOfTiles; y++) {
       for (let x = 0; x < this.baseNumberOfTiles; x++) {
         let adjacentMines = 0;
@@ -169,13 +168,13 @@ export class BoardComponent implements OnInit {
         this.revealAll();
         this.openModal();
       }
-      if(this.cells[x][y].minesAround === 0) {
-        for(const peer of this.adjacentCells) {
+      if (this.cells[x][y].minesAround === 0) {
+        for (const peer of this.adjacentCells) {
           if (
             this.cells[this.cells[x][y].row + peer[0]] &&
             this.cells[this.cells[x][y].row + peer[0]][this.cells[x][y].col + peer[1]]
           ) {
-            this.open(x + peer[0],y + peer[1]);
+            this.open(x + peer[0], y + peer[1]);
           }
         }
       }
@@ -183,7 +182,7 @@ export class BoardComponent implements OnInit {
 
   }
 
-  revealAll() {
+  revealAll(): void {
     for (const row of this.cells) {
       for (const cell of row) {
         if (cell.status === 'open') {
