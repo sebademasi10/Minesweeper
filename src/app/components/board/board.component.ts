@@ -15,6 +15,7 @@ export class BoardComponent implements OnInit {
   @Input() numberOfMines = 10;
 
   remainingMines: number = 0;
+  loaded: boolean = false;
 
   @ViewChild('loseModal') loseModal: ElementRef;
 
@@ -47,6 +48,9 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeBoard();
+    setTimeout(() => {
+      this.loaded = true;
+    }, 1000);
   }
   
   initializeBoard() {

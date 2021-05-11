@@ -5,16 +5,18 @@ import { CellComponent } from './cell/cell.component';
 
 
 
+
 @NgModule({
   declarations: [
     BoardComponent, 
-    CellComponent
+    CellComponent,
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    BoardComponent
-  ]
+    BoardComponent,
+  ],
+  providers: []
 })
 export class ComponentsModule { }
